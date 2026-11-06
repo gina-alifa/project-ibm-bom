@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KosKu Docs – Manajemen Kos</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== OVERLAY (mobile) ===== -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="logo-icon">🏠</span>
+      <span class="logo-text">KosKu Docs</span>
+    </div>
+    <nav class="sidebar-nav" role="navigation" aria-label="Menu utama">
+      <button class="nav-item active" data-page="dashboard" aria-current="page">
+        <span class="nav-icon">📊</span><span class="nav-label">Dashboard</span>
+      </button>
+      <button class="nav-item" data-page="kamar">
+        <span class="nav-icon">🚪</span><span class="nav-label">Kamar</span>
+      </button>
+      <button class="nav-item" data-page="penghuni">
+        <span class="nav-icon">👥</span><span class="nav-label">Penghuni</span>
+      </button>
+      <button class="nav-item" data-page="pembayaran">
+        <span class="nav-icon">💳</span><span class="nav-label">Pembayaran</span>
+      </button>
+      <button class="nav-item" data-page="dokumen">
+        <span class="nav-icon">📄</span><span class="nav-label">Document to Database</span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">v1.0.0</div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main" id="main">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <h1 class="page-title" id="pageTitle">Dashboard</h1>
+      <div class="topbar-right">
+        <span class="current-date" id="currentDate"></span>
+      </div>
+    </header>
+
+    <!-- ===== PAGE: DASHBOARD ===== -->
+    <section class="page active" id="page-dashboard" aria-label="Dashboard">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-blue">🏠</div>
+          <div class="kpi-body">
+            <p class="kpi-label">Total Kamar</p>
+            <p class="kpi-value" id="kpiTotal">10</p>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-green">✅</div>
+          <div class="kpi-body">
+            <p class="kpi-label">Kamar Terisi</p>
+            <p class="kpi-value" id="kpiOccupied">0</p>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-amber">🔑</div>
+          <div class="kpi-body">
+            <p class="kpi-label">Kamar Kosong</p>
+            <p class="kpi-value" id="kpiVacant">0</p>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-teal">💰</div>
+          <div class="kpi-body">
+            <p class="kpi-label">Pendapatan Bulan Ini</p>
+            <p class="kpi-value" id="kpiRevenue">Rp 0</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2 class="section-title">Pembayaran Terbaru</h2>
+        <div class="table-wrapper">
+          <table class="data-table" id="dashRecentPayments">
+            <thead>
+              <tr><th>Penghuni</th><th>Kamar</th><th>Bulan</th><th>Jumlah</th><th>Status</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PAGE: KAMAR ===== -->
+    <section class="page" id="page-kamar" aria-label="Daftar Kamar">
+      <div class="section-card">
+        <h2 class="section-title">Daftar Kamar</h2>
+        <div class="table-wrapper">
+          <table class="data-table" id="kamarTable">
+            <thead>
+              <tr><th>No. Kamar</th><th>Tipe</th><th>Harga/Bulan</th><th>Status</th><th>Penghuni</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PAGE: PENGHUNI ===== -->
+    <section class="page" id="page-penghuni" aria-label="Manajemen Penghuni">
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">Daftar Penghuni</h2>
+          <button class="btn btn-primary" id="btnAddTenant">+ Tambah Penghuni</button>
+        </div>
+        <div class="filter-bar">
+          <input type="search" class="search-input" id="searchTenant" placeholder="Cari nama atau kamar…" aria-label="Cari penghuni" />
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="penghuniTable">
+            <thead>
+              <tr><th>Nama</th><th>No. HP</th><th>Kamar</th><th>Tanggal Masuk</th><th>Harga Sewa</th><th>Aksi</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PAGE: PEMBAYARAN ===== -->
+    <section class="page" id="page-pembayaran" aria-label="Tracker Pembayaran">
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">Tracker Pembayaran</h2>
+          <button class="btn btn-primary" id="btnAddPayment">+ Catat Pembayaran</button>
+        </div>
+        <div class="filter-bar">
+          <input type="search" class="search-input" id="searchPayment" placeholder="Cari penghuni atau bulan…" aria-label="Cari pembayaran" />
+          <select class="filter-select" id="filterPaymentStatus" aria-label="Filter status pembayaran">
+            <option value="">Semua Status</option>
+            <option value="Lunas">Lunas</option>
+            <option value="Belum Bayar">Belum Bayar</option>
+            <option value="Terlambat">Terlambat</option>
+          </select>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="pembayaranTable">
+            <thead>
+              <tr><th>Penghuni</th><th>Kamar</th><th>Bulan</th><th>Jumlah</th><th>Tgl Bayar</th><th>Status</th><th>Aksi</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PAGE: DOCUMENT TO DATABASE ===== -->
+    <section class="page" id="page-dokumen" aria-label="Document to Database">
+      <div class="section-card">
+        <h2 class="section-title">Document to Database</h2>
+        <p class="section-desc">Tempel teks dari kontrak sewa atau bukti transfer, lalu klik <strong>Ekstrak Data</strong>. Periksa hasil, lalu simpan ke database.</p>
+
+        <div class="doc-format-hint">
+          <strong>Format yang didukung (contoh):</strong><br>
+          <code>Nama: Budi Santoso, Kamar: A3, Masuk: 01-11-2026, Sewa: Rp 850.000/bulan</code><br>
+          <code>Nama: Siti Rahayu | Kamar: B2 | HP: 081234567890 | Masuk: 15/10/2026 | Sewa: 750000</code>
+        </div>
+
+        <textarea class="doc-input" id="docInput" rows="6" placeholder="Tempel teks dokumen di sini…" aria-label="Input teks dokumen"></textarea>
+        <div class="doc-actions">
+          <button class="btn btn-primary" id="btnExtract">🔍 Ekstrak Data</button>
+          <button class="btn btn-ghost" id="btnClearDoc">Bersihkan</button>
+        </div>
+
+        <!-- Preview table (hidden until extraction) -->
+        <div class="doc-preview" id="docPreview" hidden>
+          <h3 class="section-title" style="margin-top:1.5rem;">Pratinjau Data Terekstrak</h3>
+          <p class="section-desc">Periksa dan edit data sebelum disimpan.</p>
+          <div class="table-wrapper">
+            <table class="data-table" id="previewTable">
+              <thead>
+                <tr><th>Field</th><th>Nilai Terekstrak</th><th>Edit</th></tr>
+              </thead>
+              <tbody id="previewBody"></tbody>
+            </table>
+          </div>
+          <div class="doc-save-actions">
+            <button class="btn btn-success" id="btnSaveDoc">💾 Simpan ke Database</button>
+            <button class="btn btn-ghost" id="btnCancelDoc">Batal</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+  <!-- ===== MODAL: PENGHUNI ===== -->
+  <div class="modal-backdrop" id="modalPenghuni" role="dialog" aria-modal="true" aria-labelledby="modalPenghuniTitle" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalPenghuniTitle">Tambah Penghuni</h2>
+        <button class="modal-close" id="closePenghuniModal" aria-label="Tutup">×</button>
+      </div>
+      <form id="formPenghuni" novalidate>
+        <div class="form-group">
+          <label for="fNama">Nama Lengkap *</label>
+          <input type="text" id="fNama" required minlength="2" placeholder="Nama penghuni" />
+          <span class="field-error" id="errNama"></span>
+        </div>
+        <div class="form-group">
+          <label for="fHP">No. HP *</label>
+          <input type="tel" id="fHP" required pattern="^[0-9+\-\s]{8,16}$" placeholder="08xxxxxxxxxx" />
+          <span class="field-error" id="errHP"></span>
+        </div>
+        <div class="form-group">
+          <label for="fKamar">Kamar *</label>
+          <select id="fKamar" required>
+            <option value="">-- Pilih Kamar --</option>
+          </select>
+          <span class="field-error" id="errKamar"></span>
+        </div>
+        <div class="form-group">
+          <label for="fMasuk">Tanggal Masuk *</label>
+          <input type="date" id="fMasuk" required />
+          <span class="field-error" id="errMasuk"></span>
+        </div>
+        <div class="form-group">
+          <label for="fSewa">Harga Sewa / Bulan (Rp) *</label>
+          <input type="number" id="fSewa" required min="100000" placeholder="750000" />
+          <span class="field-error" id="errSewa"></span>
+        </div>
+        <input type="hidden" id="fTenantId" />
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" id="cancelPenghuni">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: PEMBAYARAN ===== -->
+  <div class="modal-backdrop" id="modalPembayaran" role="dialog" aria-modal="true" aria-labelledby="modalPembayaranTitle" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalPembayaranTitle">Catat Pembayaran</h2>
+        <button class="modal-close" id="closePembayaranModal" aria-label="Tutup">×</button>
+      </div>
+      <form id="formPembayaran" novalidate>
+        <div class="form-group">
+          <label for="pPenghuni">Penghuni *</label>
+          <select id="pPenghuni" required>
+            <option value="">-- Pilih Penghuni --</option>
+          </select>
+          <span class="field-error" id="errPPenghuni"></span>
+        </div>
+        <div class="form-group">
+          <label for="pBulan">Bulan Pembayaran *</label>
+          <input type="month" id="pBulan" required />
+          <span class="field-error" id="errPBulan"></span>
+        </div>
+        <div class="form-group">
+          <label for="pJumlah">Jumlah Dibayar (Rp) *</label>
+          <input type="number" id="pJumlah" required min="1" placeholder="750000" />
+          <span class="field-error" id="errPJumlah"></span>
+        </div>
+        <div class="form-group">
+          <label for="pTglBayar">Tanggal Bayar</label>
+          <input type="date" id="pTglBayar" />
+        </div>
+        <div class="form-group">
+          <label for="pStatus">Status *</label>
+          <select id="pStatus" required>
+            <option value="Lunas">Lunas</option>
+            <option value="Belum Bayar">Belum Bayar</option>
+            <option value="Terlambat">Terlambat</option>
+          </select>
+          <span class="field-error" id="errPStatus"></span>
+        </div>
+        <input type="hidden" id="pPaymentId" />
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" id="cancelPembayaran">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
